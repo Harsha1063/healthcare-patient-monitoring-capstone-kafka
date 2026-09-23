@@ -1,0 +1,25 @@
+create 'patient_vitals', 'vitals'
+
+# Row key: patient_id
+# Column family: vitals
+# Columns:
+# vitals:event_id
+# vitals:device_id
+# vitals:heart_rate
+# vitals:temperature
+# vitals:oxygen
+# vitals:timestamp
+# vitals:status
+
+create 'patient_alerts', 'alerts'
+
+# Row key: event_id
+# Column family: alerts
+# Columns:
+# alerts:patient_id
+# alerts:device_id
+# alerts:alert_type
+# alerts:heart_rate
+# alerts:temperature
+# alerts:oxygen
+# alerts:timestamp

@@ -1,0 +1,53 @@
+HEALTHCARE PATIENT VITAL MONITORING
+===================================
+
+Pipeline:
+Kafka -> Spark -> Rule Engine -> CSV
+
+Kafka Topic:
+patient-vitals
+
+Healthcare Rules:
+1. Heart rate > 120 -> HIGH_HEART_RATE
+2. Oxygen < 90 -> LOW_OXYGEN
+3. Temperature > 39 -> HIGH_TEMPERATURE
+
+Duplicate Handling:
+Duplicate event_id values are removed using Spark dropDuplicates("event_id").
+
+Verified Results:
+NORMAL = 3
+HIGH_HEART_RATE ALERT = 3
+CRITICAL = 3
+
+Fresh Demo Event:
+Event ID: DEMO001
+Patient ID: P200
+Heart Rate: 132
+Temperature: 38.1
+Oxygen: 91
+Result: ALERT: HIGH_HEART_RATE
+
+Critical Demo Event:
+Event ID: CAPSTONE001
+Patient ID: P100
+Heart Rate: 145
+Temperature: 39.2
+Oxygen: 88
+Result: CRITICAL: HIGH_HEART_RATE, LOW_OXYGEN, HIGH_TEMPERATURE
+
+Output Files:
+data/processed/patient-alerts.csv
+data/processed/alert-summary.csv
+
+Environment:
+Windows 11
+Java 17
+Scala 2.12.18
+Spark 3.5.6
+Kafka 4.3.1
+
+Implementation Note:
+The working Spark implementation uses Kafka batch consumption and Java file I/O.
+Windows Hadoop NativeIO prevented the use of Hadoop filesystem writes and
+Structured Streaming checkpointing in the current environment.
